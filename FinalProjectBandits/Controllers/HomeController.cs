@@ -6,20 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FinalProjectBandits.Models;
+using Microsoft.EntityFrameworkCore;
+using FinalProjectBandits.Data;
 
 namespace FinalProjectBandits.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _applicationDbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext applicationDbContext, ILogger<HomeController> logger)
         {
+            _applicationDbContext = applicationDbContext;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
+            var Customers = await _applicationDbContext.Customers.ToListAsync();
             return View();
         }
 
