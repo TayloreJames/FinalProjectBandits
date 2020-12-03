@@ -1,6 +1,8 @@
 ﻿using FinalProjectBandits.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using System;
 
 namespace FinalProjectBandits.Data
 {
@@ -20,4 +22,5 @@ namespace FinalProjectBandits.Data
             base.OnModelCreating(builder);
         }
     }
+
 }
