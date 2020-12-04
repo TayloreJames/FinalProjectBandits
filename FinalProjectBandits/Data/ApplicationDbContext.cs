@@ -18,6 +18,10 @@ namespace FinalProjectBandits.Data
         {
             builder.Entity<Customer>()
                 .HasKey(customer => customer.ID);
+            //builder.Entity<Customer>().HasOne()
+
+
+
 
             base.OnModelCreating(builder);
         }

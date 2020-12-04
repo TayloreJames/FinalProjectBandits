@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Map MUAP";
+}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Map</title>
+    <style>
+        html, body, #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.17/"></script>
+
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/layers/FeatureLayer"
+        ], function (Map, MapView, FeatureLayer) {
+
+            var map = new Map({
+                basemap: "topo-vector"
+            });
+
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                center: [-83.045753, 42.331429],
+                zoom: 13
+            });
+
+            var muapLayer = new FeatureLayer({
+                url: "https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/Medically_Underserved_Areas_Population/FeatureServer/0"
+            });
+
+            map.add(muapLayer, 0);
+
+        });
+    </script>
+</head>
+<body>
+    <div id="viewDiv"></div>
+</body>
+</html>

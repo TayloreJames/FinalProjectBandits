@@ -25,6 +25,13 @@ namespace FinalProjectBandits.Controllers
             return View();
         }
 
+
+        //public IActionResult MuapFeatureMap()
+       // {
+        //    return View();
+        //}
+
+
         public IActionResult Privacy()
         {
             return View();

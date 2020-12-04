@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,5 +20,8 @@ namespace FinalProjectBandits.Models
         public string State { get; set; }
         public int Zip { get; set; }
         public int Phone { get; set; }
+
+        public string UserEmail { get; set; }
+        public IdentityUser User { get; set; }
     }
 }
