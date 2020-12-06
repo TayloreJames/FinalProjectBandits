@@ -19,28 +19,28 @@ namespace FinalProjectBandits.Controllers
             foreach (Feature feature in featureLayer.features)
             {
                 MedicallyUnderservedArea area = new MedicallyUnderservedArea();
-                area.FuncStat10 = feature.attributes.funcstat_10;
-                area.StateFp10 = feature.attributes.statefp_10;
-                area.CountyFp10 = feature.attributes.countyfp_10;
-                area.ShapeArea = feature.attributes.shape_area;
-                area.Muap = feature.attributes.muap;
-                area.DateUpdate = feature.attributes.date_updat;
-                area.Awater10 = feature.attributes.awater_10;
-                area.MuapIndex = feature.attributes.muap_index;
-                area.SrvcArea = feature.attributes.srvc_area;
-                area.ShapeLeng = feature.attributes.shape_leng;
-                area.GeoId10 = feature.attributes.geoid_10;
-                area.Name10 = feature.attributes.name_10;
-                area.Intptlon = feature.attributes.intptlon_10;
-                area.MuapDate = feature.attributes.muap_date;
-                area.Aland10 = feature.attributes.aland_10;
-                area.Tractce10 = feature.attributes.tractce_10;
-                area.NameLsad10 = feature.attributes.namelsad_10;
-                area.Intptlat10 = feature.attributes.intptlat_10;
-                area.Mtfcc10 = feature.attributes.mtfcc_10;
-                area.ObjectId = feature.attributes.ObjectId;
-                area.ShapeAreaA = feature.attributes.Shape__Area;
-                area.ShapeLengthA = feature.attributes.Shape__Length;
+               // area.FuncStat10 = feature.attributes.funcstat_10;
+               // area.StateFp10 = feature.attributes.statefp_10;
+               // area.CountyFp10 = feature.attributes.countyfp_10;
+               // area.ShapeArea = feature.attributes.shape_area;
+              //  area.Muap = feature.attributes.muap;
+              //  area.DateUpdate = feature.attributes.date_updat;
+              //  area.Awater10 = feature.attributes.awater_10;
+               // area.MuapIndex = feature.attributes.muap_index;
+              //  area.SrvcArea = feature.attributes.srvc_area;
+              //  area.ShapeLeng = feature.attributes.shape_leng;
+              //  area.GeoId10 = feature.attributes.geoid_10;
+              //  area.Name10 = feature.attributes.name_10;
+              //  area.Intptlon = feature.attributes.intptlon_10;
+              //  area.MuapDate = feature.attributes.muap_date;
+              //  area.Aland10 = feature.attributes.aland_10;
+              //  area.Tractce10 = feature.attributes.tractce_10;
+              //  area.NameLsad10 = feature.attributes.namelsad_10;
+              //  area.Intptlat10 = feature.attributes.intptlat_10;
+             //   area.Mtfcc10 = feature.attributes.mtfcc_10;
+             //   area.ObjectId = feature.attributes.ObjectId;
+             //   area.ShapeAreaA = feature.attributes.Shape__Area;
+             //   area.ShapeLengthA = feature.attributes.Shape__Length;
 
                 Console.WriteLine(feature.attributes.ObjectId);
             }

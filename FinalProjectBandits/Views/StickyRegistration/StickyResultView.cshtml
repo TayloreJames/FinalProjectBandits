@@ -1,0 +1,50 @@
+﻿@model FinalProjectBandits.Models.StickyRegistrationResultViewModel
+@*Pulling Information from RegistrationResultViewModel*@
+@{
+    ViewData["Title"] = "StickyRegistrationResultView";
+}
+
+<h1>Sticky Registration Result</h1>
+
+<hr />
+@*Card BootStrap*@
+<div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+    <div class="card-header">@Model.Title</div>
+    <div class="card-body">
+        <p class="card-text">
+        <p>
+            @*Bringing in StickyRegistrtaionResultView*@
+            <span>Category - @Model.Category</span>
+        </p>
+        <p>
+            <span>Description - @Model.Description</span>
+
+
+        </p>
+        <p>
+            @*Getting Current Time*@
+            <span>Date - @DateTime.Now</span>
+        </p>
+        <p>
+            <span>Address - @Model.Address</span>
+        </p>
+        <p>
+            <span>Name - @Model.Name</span>
+        </p>
+    </div>
+</div>
+
+@*MessageBox Displaying Result*@
+<body>
+
+    <div class="container">
+        <div class="alert alert-success">
+            <strong>Success!</strong>@Model.Result
+        </div>
+    </div>
+
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

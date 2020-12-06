@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using FinalProjectBandits.Models;
 using Microsoft.EntityFrameworkCore;
 using FinalProjectBandits.Data;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FinalProjectBandits.Controllers
 {
@@ -12,6 +14,7 @@ namespace FinalProjectBandits.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly int NUMBEROFITEM = 10;
 
         public HomeController(ApplicationDbContext applicationDbContext, ILogger<HomeController> logger)
         {
@@ -21,16 +24,55 @@ namespace FinalProjectBandits.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            var Customers = await _applicationDbContext.Customers.ToListAsync();
-            return View();
+            var taskListItems = await _applicationDbContext.TaskListItems
+                .OrderBy(item => item.DatePosted)
+                .Take(10).ToListAsync();
+            return View(taskListItems);
+
+            /*List<TaskListItem> top10item = FakeDataSeed
+                    .GetTaskListItems()
+                    .OrderBy(item => item.DatePosted)
+                    .Take<TaskListItem>(NUMBEROFITEM)
+                    .ToList<TaskListItem>();
+            return View(top10item);
+        */
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            TaskListItem item = null;
+            item = await _applicationDbContext.TaskListItems.FirstOrDefaultAsync(item => item.Id == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            // foreach (TaskListItem aitem in FakeDataSeed.GetTaskListItems())
+            //{
+            //     if (aitem.Id == id) 
+            //     {
+            //         item = aitem;
+            //        break;
+            //    }
+
+            // }
+            return View(item);
         }
 
 
         //public IActionResult MuapFeatureMap()
-       // {
+        // {
         //    return View();
         //}
 
+        public IActionResult About()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

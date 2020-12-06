@@ -6,6 +6,7 @@ using FinalProjectBandits.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FinalProjectBandits.Services;
 
 namespace FinalProjectBandits
 {
@@ -28,8 +29,10 @@ namespace FinalProjectBandits
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
-
+            services.AddTransient<IStickyService, StickyService>();
             services.AddRazorPages();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

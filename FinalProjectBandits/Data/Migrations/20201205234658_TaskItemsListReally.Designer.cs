@@ -4,14 +4,16 @@ using FinalProjectBandits.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FinalProjectBandits.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201205234658_TaskItemsListReally")]
+    partial class TaskItemsListReally
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +40,6 @@ namespace FinalProjectBandits.Data.Migrations
                     b.Property<string>("Last_Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("MuapIndex")
-                        .HasColumnType("float");
-
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
@@ -64,20 +63,6 @@ namespace FinalProjectBandits.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            City = "Detroit",
-                            First_Name = "Betty",
-                            Last_Name = "White",
-                            MuapIndex = 55.0,
-                            Phone = -867,
-                            State = "MI",
-                            Street = "1513 Broadway",
-                            Zip = 0
-                        });
                 });
 
             modelBuilder.Entity("FinalProjectBandits.Models.TaskListItem", b =>
@@ -116,20 +101,6 @@ namespace FinalProjectBandits.Data.Migrations
                     b.HasIndex("CustomerID");
 
                     b.ToTable("TaskListItems");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Category = 1,
-                            CustomerID = 1,
-                            DatePosted = new DateTime(2020, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Expiration = new DateTime(2020, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 1,
-                            TaskDescription = "I need someone to rake my very large lawn. I'm old and can't do it.",
-                            TaskStartDate = new DateTime(2020, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TaskTitle = "Rake Leaves Please"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

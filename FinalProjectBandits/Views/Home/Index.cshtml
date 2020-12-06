@@ -1,8 +1,105 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<FinalProjectBandits.Models.TaskListItem>
+
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Welcome to PostHelpGet.com</h1>
+<p>
+    You can register for a new account and login to be able to post things you need, as well as check out where you can help others. View a map to see where some of your neighborhoods are most in need to be able to have the most impact with your assistance.
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Expiration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePosted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Expiration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                </td>
+                <td>
+
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+<br />
+<table class="table" width=25%>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="background-color: yellow">
+                    @Html.DisplayFor(modelItem => item.TaskTitle)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.TaskDescription)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.Status)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.Category)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.TaskStartDate)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.Expiration)
+                    <br />
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                    <br />
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <br />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
