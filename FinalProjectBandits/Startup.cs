@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FinalProjectBandits.Services;
+using System;
 
 namespace FinalProjectBandits
 {
@@ -31,6 +32,18 @@ namespace FinalProjectBandits
             services.AddControllersWithViews();
             services.AddTransient<IStickyService, StickyService>();
             services.AddRazorPages();
+
+            services.AddHttpClient<IMUAPService, MUAPService>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration["arcBaseAddress"]);
+            });
+
+            services.AddHttpClient<IGeocodingService, GeocodingService>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration["googleMapsBase"]);
+            });
+
+            services.AddTransient<ICombinedAPIService, CombinedAPIService>();
 
         }
 
