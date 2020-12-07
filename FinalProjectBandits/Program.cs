@@ -24,9 +24,9 @@ namespace FinalProjectBandits
               {
                   config.SetBasePath(webHostBuilderContext.HostingEnvironment.ContentRootPath)
                      .AddUserSecrets(typeof(Program).Assembly)
-                     .AddEnvironmentVariables()
-                     .AddJsonFile("appsettings.json")
-                     .AddJsonFile($"appsettings.{webHostBuilderContext.HostingEnvironment.EnvironmentName}.json");
+                     .AddEnvironmentVariables();
+                     //.AddJsonFile("appsettings.json")
+                     //.AddJsonFile($"appsettings.{webHostBuilderContext.HostingEnvironment.EnvironmentName}.json");
                   var intermediate = config.Build();
                   config.AddAzureAppConfiguration(options =>
                   {
