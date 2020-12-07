@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using FinalProjectBandits.Data;
 using FinalProjectBandits.Models;
 using Microsoft.AspNetCore.Identity;
+using FinalProjectBandits.Services;
 
 namespace FinalProjectBandits.Controllers
 {
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
-
 
         public CustomersController(ApplicationDbContext context)
         {
@@ -84,6 +84,8 @@ namespace FinalProjectBandits.Controllers
             {
                 return NotFound();
             }
+            string address = customer.Street + "," + customer.City + "," + customer.State + " " + customer.Zip;
+            bool inMuap = MuapUtility.IsAddressInMUAPArea(address);
             ViewData["UserId"] = new SelectList(_context.Set<IdentityUser>(), "Id", "Id", customer.UserId);
             return View(customer);
         }
@@ -120,6 +122,8 @@ namespace FinalProjectBandits.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            string address = "1050 Woodward Ave, Detroit, MI 48226";
+            bool inMuap = MuapUtility.IsAddressInMUAPArea(address);
             ViewData["UserId"] = new SelectList(_context.Set<IdentityUser>(), "Id", "Id", customer.UserId);
             return View(customer);
         }
@@ -135,6 +139,7 @@ namespace FinalProjectBandits.Controllers
             var customer = await _context.Customers
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (customer == null)
             {
                 return NotFound();

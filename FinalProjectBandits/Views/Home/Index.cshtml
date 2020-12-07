@@ -62,42 +62,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.DatePosted)
                 </td>
+
                 <td>
 
                     <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a>
 
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<br />
-<br />
-<br />
-<table class="table" width=25%>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td style="background-color: yellow">
-                    @Html.DisplayFor(modelItem => item.TaskTitle)
-                    <br />
-                    @Html.DisplayFor(modelItem => item.TaskDescription)
-                    <br />
-                    @Html.DisplayFor(modelItem => item.Status)
-                    <br />
-                    @Html.DisplayFor(modelItem => item.Category)
-                    <br />
-                    @Html.DisplayFor(modelItem => item.TaskStartDate)
-                    <br />
-                    @Html.DisplayFor(modelItem => item.Expiration)
-                    <br />
-                    @Html.DisplayFor(modelItem => item.DatePosted)
-                    <br />
-                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <br />
                 </td>
             </tr>
         }

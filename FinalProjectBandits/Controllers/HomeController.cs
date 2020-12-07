@@ -63,14 +63,6 @@ namespace FinalProjectBandits.Controllers
         //    return View(item);
         //}
 
-
-
-
-        //public IActionResult MuapFeatureMap()
-        // {
-        //    return View();
-        //}
-
         public IActionResult About()
         {
             return View();

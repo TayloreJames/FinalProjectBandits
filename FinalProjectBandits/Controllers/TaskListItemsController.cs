@@ -37,6 +37,7 @@ namespace FinalProjectBandits.Controllers
             var taskListItem = await _context.TaskListItems
                 .Include(t => t.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (taskListItem == null)
             {
                 return NotFound();
@@ -54,15 +55,47 @@ namespace FinalProjectBandits.Controllers
             var taskListItem = await _context.TaskListItems
                 .Include(t => t.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (taskListItem == null)
             {
                 return NotFound();
             }
-            taskListItem.Status = Models.Enums.ItemStatus.CheckedOut;
-            _context.Update(taskListItem);
-            await _context.SaveChangesAsync();
+
+            if (taskListItem.Status == Models.Enums.ItemStatus.Open)
+            {
+                taskListItem.Status = Models.Enums.ItemStatus.CheckedOut;
+                _context.Update(taskListItem);
+                await _context.SaveChangesAsync();
+            }
+
             return View(taskListItem);
         }
+
+        public async Task<IActionResult> MarkDone(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var taskListItem = await _context.TaskListItems
+                .Include(t => t.Customer)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (taskListItem == null)
+            {
+                return NotFound();
+            }
+            if (taskListItem.Status == Models.Enums.ItemStatus.CheckedOut)
+            {
+                taskListItem.Status = Models.Enums.ItemStatus.Done;
+                _context.Update(taskListItem);
+                await _context.SaveChangesAsync();
+            }
+
+            return View(taskListItem);
+        }
+
         // GET: TaskListItems1/Create
         public IActionResult Create()
         {
@@ -96,6 +129,7 @@ namespace FinalProjectBandits.Controllers
             }
 
             var taskListItem = await _context.TaskListItems.FindAsync(id);
+
             if (taskListItem == null)
             {
                 return NotFound();
@@ -134,8 +168,10 @@ namespace FinalProjectBandits.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CustomerID"] = new SelectList(_context.Set<Customer>(), "ID", "ID", taskListItem.CustomerID);
             return View(taskListItem);
         }
@@ -151,6 +187,7 @@ namespace FinalProjectBandits.Controllers
             var taskListItem = await _context.TaskListItems
                 .Include(t => t.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (taskListItem == null)
             {
                 return NotFound();
