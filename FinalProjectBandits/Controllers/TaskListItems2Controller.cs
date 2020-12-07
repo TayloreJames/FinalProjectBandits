@@ -7,26 +7,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProjectBandits.Data;
 using FinalProjectBandits.Models;
+using FinalProjectBandits.Models.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace FinalProjectBandits.Controllers
 {
-    public class TaskListItemsController : Controller
+    public class TaskListItems2Controller : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public TaskListItemsController(ApplicationDbContext context)
+        public TaskListItems2Controller(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: TaskListItems1
+        // GET: TaskListItems
         public async Task<IActionResult> Index()
         {
-            var finalProjectBanditsContext = _context.TaskListItems.Include(t => t.Customer);
-            return View(await finalProjectBanditsContext.ToListAsync());
+            var taskListItems = await _context.TaskListItems.ToListAsync();
+            return View(taskListItems);
+            //return View(FakeDataSeed.GetTaskListItems());
         }
 
-        // GET: TaskListItems1/Details/5
+        // GET: TaskListItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,7 +40,6 @@ namespace FinalProjectBandits.Controllers
             }
 
             var taskListItem = await _context.TaskListItems
-                .Include(t => t.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (taskListItem == null)
             {
@@ -44,6 +48,8 @@ namespace FinalProjectBandits.Controllers
 
             return View(taskListItem);
         }
+
+        // GET: TaskListItems/CheckOut/5
         public async Task<IActionResult> CheckOut(int? id)
         {
             if (id == null)
@@ -52,42 +58,63 @@ namespace FinalProjectBandits.Controllers
             }
 
             var taskListItem = await _context.TaskListItems
-                .Include(t => t.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            //try
+            //{
+            //    _context.Update(taskListItem);
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!TaskListItemExists(taskListItem.Id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+ 
             if (taskListItem == null)
             {
                 return NotFound();
             }
-            taskListItem.Status = Models.Enums.ItemStatus.CheckedOut;
-            _context.Update(taskListItem);
-            await _context.SaveChangesAsync();
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(m => m.ID == taskListItem.CustomerID);
+            taskListItem.Customer = customer;
             return View(taskListItem);
         }
-        // GET: TaskListItems1/Create
+
+        // GET: TaskListItems/Create
         public IActionResult Create()
         {
-            ViewData["CustomerID"] = new SelectList(_context.Set<Customer>(), "ID", "ID");
+            ViewData["CustomerID"] = new SelectList(_context.Customers, "ID", "ID");
             return View();
         }
 
-        // POST: TaskListItems1/Create
+        // POST: TaskListItems/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,TaskTitle,TaskDescription,Status,Category,TaskStartDate,Expiration,DatePosted,CustomerID")] TaskListItem taskListItem)
         {
+
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                var Customer = await _context.Customers.FirstOrDefaultAsync(x => x.UserId == user.Id);
+                taskListItem.CustomerID = Customer.ID;
                 _context.Add(taskListItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerID"] = new SelectList(_context.Set<Customer>(), "ID", "ID", taskListItem.CustomerID);
             return View(taskListItem);
         }
 
-        // GET: TaskListItems1/Edit/5
+        // GET: TaskListItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,16 +127,15 @@ namespace FinalProjectBandits.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerID"] = new SelectList(_context.Set<Customer>(), "ID", "ID", taskListItem.CustomerID);
             return View(taskListItem);
         }
 
-        // POST: TaskListItems1/Edit/5
+        // POST: TaskListItems/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TaskTitle,TaskDescription,Status,Category,TaskStartDate,Expiration,DatePosted,CustomerID")] TaskListItem taskListItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TaskTitle,TaskDescription,Status,Category,TaskStartDate,Expiration,DatePosted")] TaskListItem taskListItem)
         {
             if (id != taskListItem.Id)
             {
@@ -136,11 +162,10 @@ namespace FinalProjectBandits.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerID"] = new SelectList(_context.Set<Customer>(), "ID", "ID", taskListItem.CustomerID);
             return View(taskListItem);
         }
 
-        // GET: TaskListItems1/Delete/5
+        // GET: TaskListItems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -149,7 +174,6 @@ namespace FinalProjectBandits.Controllers
             }
 
             var taskListItem = await _context.TaskListItems
-                .Include(t => t.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (taskListItem == null)
             {
@@ -159,7 +183,7 @@ namespace FinalProjectBandits.Controllers
             return View(taskListItem);
         }
 
-        // POST: TaskListItems1/Delete/5
+        // POST: TaskListItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

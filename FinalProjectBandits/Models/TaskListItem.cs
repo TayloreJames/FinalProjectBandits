@@ -1,6 +1,7 @@
 ﻿using FinalProjectBandits.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,8 +12,12 @@ namespace FinalProjectBandits.Models
         //public int CustomerID { get; set; }
         public int Id { get; set; }
         public string TaskTitle { get; set; }
-        public string TaskDescription { get; set; }        
+        public string TaskDescription { get; set; }
+
+        [EnumDataType(typeof(ItemStatus))]
         public ItemStatus Status { get; set; }
+
+        [EnumDataType(typeof(ItemCategory))]
         public ItemCategory Category { get; set; }
         public DateTime TaskStartDate { get; set; }
         public DateTime Expiration { get; set; }
@@ -24,7 +29,5 @@ namespace FinalProjectBandits.Models
 
         public int CustomerID { get; set; }
         public Customer Customer { get; set; }
-
-
     }
 }

@@ -4,14 +4,16 @@ using FinalProjectBandits.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FinalProjectBandits.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201206195138_KeySetupId")]
+    partial class KeySetupId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,43 +72,121 @@ namespace FinalProjectBandits.Data.Migrations
                         {
                             ID = 1,
                             City = "Detroit",
-                            Email = "sandyisgreat@gmail.com",
                             First_Name = "Betty",
                             Last_Name = "White",
                             MuapIndex = 55.0,
                             Phone = "313-300-0880",
                             State = "MI",
                             Street = "1513 Broadway",
-                            UserId = "6f304f04-0620-4ea4-b969-545b3152a700",
-                            Zip = 48226
+                            Zip = 0
                         },
                         new
                         {
                             ID = 2,
                             City = "Detroit",
-                            Email = "sendmemail@gmail.com",
                             First_Name = "Ann",
                             Last_Name = "Dombrowski",
                             MuapIndex = 45.0,
                             Phone = "313-555-1212",
                             State = "MI",
                             Street = "1 Woodward",
-                            UserId = "0f1e3768-39ba-4e08-8892-ab2e60db27da",
-                            Zip = 48226
+                            Zip = 0
                         },
                         new
                         {
                             ID = 3,
                             City = "Detroit",
-                            Email = "sendm@gmail.com",
                             First_Name = "Chuck",
                             Last_Name = "Norris",
                             MuapIndex = 35.0,
                             Phone = "313-666-1212",
                             State = "MI",
                             Street = "2346 Woodward",
-                            UserId = "0d8258fb-d79a-47f9-80c1-f93dc8ff1ea6",
-                            Zip = 48226
+                            Zip = 0
+                        },
+                        new
+                        {
+                            ID = 4,
+                            City = "Detroit",
+                            First_Name = "Dennis",
+                            Last_Name = "Shire",
+                            MuapIndex = 65.0,
+                            Phone = "313-777-3212",
+                            State = "MI",
+                            Street = "1416 Woodward",
+                            Zip = 0
+                        },
+                        new
+                        {
+                            ID = 5,
+                            City = "Detroit",
+                            First_Name = "Chuck",
+                            Last_Name = "Norris",
+                            MuapIndex = 35.0,
+                            Phone = "313-666-1212",
+                            State = "MI",
+                            Street = "2346 Woodward",
+                            Zip = 0
+                        },
+                        new
+                        {
+                            ID = 6,
+                            City = "Detroit",
+                            First_Name = "Chuck",
+                            Last_Name = "Norris",
+                            MuapIndex = 35.0,
+                            Phone = "313-666-1212",
+                            State = "MI",
+                            Street = "2346 Woodward",
+                            Zip = 0
+                        },
+                        new
+                        {
+                            ID = 7,
+                            City = "Detroit",
+                            First_Name = "Chuck",
+                            Last_Name = "Norris",
+                            MuapIndex = 35.0,
+                            Phone = "313-666-1212",
+                            State = "MI",
+                            Street = "2346 Woodward",
+                            Zip = 0
+                        },
+                        new
+                        {
+                            ID = 8,
+                            City = "Detroit",
+                            First_Name = "Chuck",
+                            Last_Name = "Norris",
+                            MuapIndex = 35.0,
+                            Phone = "313-666-1212",
+                            State = "MI",
+                            Street = "2346 Woodward",
+                            Zip = 0
+                        },
+                        new
+                        {
+                            ID = 9,
+                            City = "Detroit",
+                            First_Name = "Chuck",
+                            Last_Name = "Norris",
+                            MuapIndex = 35.0,
+                            Phone = "313-666-1212",
+                            State = "MI",
+                            Street = "2346 Woodward",
+                            Zip = 0
+                        },
+                        new
+                        {
+                            ID = 10,
+                            City = "Detroit",
+                            First_Name = "Chuck",
+                            Last_Name = "Norris",
+                            MuapIndex = 35.0,
+                            Phone = "313-666-1212",
+                            State = "MI",
+                            Street = "2346 Woodward",
+                            Zip = 0
                         });
                 });
 

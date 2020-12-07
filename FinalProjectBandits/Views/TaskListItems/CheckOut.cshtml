@@ -1,0 +1,85 @@
+﻿@model FinalProjectBandits.Models.TaskListItem
+
+@{
+    ViewData["Title"] = "Details--CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var statusBgColor = "background-color:white";
+
+    if (Model.Status == FinalProjectBandits.Models.Enums.ItemStatus.CheckedOut)
+    {
+        statusBgColor = "background-color:aqua";
+    }
+}
+
+<h1>Checked Out</h1>
+
+<div>
+    <h4>TaskListItem</h4>
+    <hr />
+    <dl class="row" style="@statusBgColor">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TaskTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TaskTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TaskDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TaskDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TaskStartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TaskStartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Expiration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Expiration)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DatePosted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatePosted)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.First_Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.First_Name)
+        @*</dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Email)
+        </dd>*@
+    </dl>
+</div>
+<div>
+
+    <a asp-controller="TaskListItems" asp-action="Index">Back to List</a>
+</div>

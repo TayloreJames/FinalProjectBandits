@@ -64,7 +64,7 @@
                 </td>
                 <td>
 
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a>
 
                 </td>
             </tr>
@@ -96,7 +96,7 @@
                     <br />
                     @Html.DisplayFor(modelItem => item.DatePosted)
                     <br />
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a>
                     <br />
                 </td>
             </tr>

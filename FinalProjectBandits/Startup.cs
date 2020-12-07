@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +31,6 @@ namespace FinalProjectBandits
             services.AddControllersWithViews();
             services.AddTransient<IStickyService, StickyService>();
             services.AddRazorPages();
-
 
         }
 

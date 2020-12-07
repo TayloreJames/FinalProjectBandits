@@ -4,14 +4,16 @@ using FinalProjectBandits.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FinalProjectBandits.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201206214257_Addthreecustomers")]
+    partial class Addthreecustomers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,50 +66,6 @@ namespace FinalProjectBandits.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            City = "Detroit",
-                            Email = "sandyisgreat@gmail.com",
-                            First_Name = "Betty",
-                            Last_Name = "White",
-                            MuapIndex = 55.0,
-                            Phone = "313-300-0880",
-                            State = "MI",
-                            Street = "1513 Broadway",
-                            UserId = "6f304f04-0620-4ea4-b969-545b3152a700",
-                            Zip = 48226
-                        },
-                        new
-                        {
-                            ID = 2,
-                            City = "Detroit",
-                            Email = "sendmemail@gmail.com",
-                            First_Name = "Ann",
-                            Last_Name = "Dombrowski",
-                            MuapIndex = 45.0,
-                            Phone = "313-555-1212",
-                            State = "MI",
-                            Street = "1 Woodward",
-                            UserId = "0f1e3768-39ba-4e08-8892-ab2e60db27da",
-                            Zip = 48226
-                        },
-                        new
-                        {
-                            ID = 3,
-                            City = "Detroit",
-                            Email = "sendm@gmail.com",
-                            First_Name = "Chuck",
-                            Last_Name = "Norris",
-                            MuapIndex = 35.0,
-                            Phone = "313-666-1212",
-                            State = "MI",
-                            Street = "2346 Woodward",
-                            UserId = "0d8258fb-d79a-47f9-80c1-f93dc8ff1ea6",
-                            Zip = 48226
-                        });
                 });
 
             modelBuilder.Entity("FinalProjectBandits.Models.TaskListItem", b =>
@@ -146,20 +104,6 @@ namespace FinalProjectBandits.Data.Migrations
                     b.HasIndex("CustomerID");
 
                     b.ToTable("TaskListItems");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Category = 1,
-                            CustomerID = 1,
-                            DatePosted = new DateTime(2020, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Expiration = new DateTime(2020, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 1,
-                            TaskDescription = "I need someone to rake my very large lawn. I'm old and can't do it.",
-                            TaskStartDate = new DateTime(2020, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TaskTitle = "Rake Leaves Please"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -14,7 +14,7 @@ namespace FinalProjectBandits.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _applicationDbContext;
-        private readonly int NUMBEROFITEM = 10;
+        //private readonly int NUMBEROFITEM = 10;
 
         public HomeController(ApplicationDbContext applicationDbContext, ILogger<HomeController> logger)
         {
@@ -38,30 +38,32 @@ namespace FinalProjectBandits.Controllers
         */
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            TaskListItem item = null;
-            item = await _applicationDbContext.TaskListItems.FirstOrDefaultAsync(item => item.Id == id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            // foreach (TaskListItem aitem in FakeDataSeed.GetTaskListItems())
-            //{
-            //     if (aitem.Id == id) 
-            //     {
-            //         item = aitem;
-            //        break;
-            //    }
+        //    TaskListItem item = null;
+        //    item = await _applicationDbContext.TaskListItems.FirstOrDefaultAsync(item => item.Id == id);
+        //    if (item == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    foreach (TaskListItem aitem in FakeDataSeed.GetTaskListItems())
+        //    {
+        //        if (aitem.Id == id)
+        //        {
+        //            item = aitem;
+        //            break;
+        //        }
 
-            // }
-            return View(item);
-        }
+        //    }
+        //    return View(item);
+        //}
+
+
 
 
         //public IActionResult MuapFeatureMap()

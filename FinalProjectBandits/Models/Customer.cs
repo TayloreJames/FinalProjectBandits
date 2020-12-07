@@ -18,10 +18,10 @@ namespace FinalProjectBandits.Models
         public string City { get; set; }
         public string State { get; set; }
         public int Zip { get; set; }
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         public double MuapIndex { get; set; }
-
+       
         public string Password { get; set; }
         //public string Skill1 { get; set; }
         //public string Skill2 { get; set; }
@@ -31,7 +31,7 @@ namespace FinalProjectBandits.Models
         //public string Email { get; set; }
 
         public List<TaskListItem> Items { get; set; }
-
+        public string UserId { get; set; }
         public IdentityUser User { get; set; }
 
         //how do we relate now to the MedicallyUnderservedArea field we need: MUAPIndex
