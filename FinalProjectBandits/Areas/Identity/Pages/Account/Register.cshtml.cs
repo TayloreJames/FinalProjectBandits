@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using FinalProjectBandits.Data;
+using FinalProjectBandits.Models;
+using Google.GData.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -23,17 +26,21 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _dbContext;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext dbContext
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _dbContext = dbContext;
         }
 
         [BindProperty]
@@ -45,6 +52,41 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string First_Name { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string Last_Name { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "Street")]
+            public string Street { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "State")]
+            public string State { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "Zip")]
+            public string Zip { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "Phone")]
+            public string Phone { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -79,13 +121,33 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    var customer = new Customer { 
+                        First_Name = Input.First_Name, 
+                        Last_Name = Input.Last_Name,
+                        Street = Input.Street,
+                        City = Input.City,
+                        State = Input.State,
+                        Zip = Input.Zip,
+                        Phone = Input.Phone,
+                        Email = Input.Email, 
+                        UserId = user.Id 
+                    };
+
+                    _dbContext.Customers.Add(customer);
+                    await _dbContext.SaveChangesAsync();
+
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        values: new { 
+                            area = "Identity", 
+                            userId = user.Id, 
+                            code = code, 
+                            returnUrl = returnUrl 
+                        },
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
@@ -93,7 +155,10 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new { 
+                            email = Input.Email, 
+                            returnUrl = returnUrl 
+                        });
                     }
                     else
                     {
@@ -105,6 +170,8 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+
+
             }
 
             // If we got this far, something failed, redisplay form

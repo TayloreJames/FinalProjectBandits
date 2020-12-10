@@ -24,7 +24,8 @@ namespace FinalProjectBandits.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var finalProjectBanditsContext = _context.Customers.Include(c => c.User);
+            var finalProjectBanditsContext = _context.Customers;
+                //.Include(c => c.User);
             return View(await finalProjectBanditsContext.ToListAsync());
         }
 
@@ -37,7 +38,7 @@ namespace FinalProjectBandits.Controllers
             }
 
             var customer = await _context.Customers
-                .Include(c => c.User)
+                //.Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (customer == null)
             {
@@ -137,7 +138,7 @@ namespace FinalProjectBandits.Controllers
             }
 
             var customer = await _context.Customers
-                .Include(c => c.User)
+                //.Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (customer == null)
