@@ -10,65 +10,149 @@
     You can register for a new account and login to be able to post things you need, as well as check out where you can help others. View a map in the About section to see where some of your neighborhoods are most in need to be able to have the most impact with your help.
 </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TaskTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TaskDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TaskStartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Expiration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatePosted)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+@*<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskStartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Expiration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DatePosted)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaskTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaskDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaskStartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Expiration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatePosted)
+                    </td>
+
+                    <td>
+
+                        <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+
+<style>
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .btn1 {
+        background-color: deepskyblue;
+        border: none;
+        color: white;
+        padding: 8px 32px;
+        text-align: center;
+        float: left;
+        width: 100%;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        opacity: 1;
+        transition: 0.3s;
+        /*display: inline-block;*/
+    }
+
+    .btn2 {
+        background-color: indianred;
+        border: none;
+        color: white;
+        padding: 8px 32px;
+        text-align: center;
+        float: left;
+        width: 100%;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        opacity: 1;
+        transition: 0.3s;
+        /*display: inline-block;*/
+    }
+
+        .btn1:hover {
+            opacity: 0.6
+        }
+        .btn2:hover {
+            opacity: 0.6
+        }
+</style>
+
+<div class="flex-container">
+    <div class="card-columns">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TaskTitle)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TaskDescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TaskStartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Expiration)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DatePosted)
-                </td>
+            <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                <div class="card-header">@Html.DisplayFor(modelItem => item.TaskTitle)</div>
+                <div class="card-body">
 
-                <td>
+                    <p>
+                        @*<span>Description - @Html.DisplayFor(modelItem => item.TaskDescription)</span>*@
+                        <span>Description - @Html.Raw((item.TaskDescription.Length > 50 ? item.TaskDescription.Substring(0, 50) + "..." : item.TaskDescription))</span>
+                    </p>
+                    <p>
+                        <span>Status - @Html.DisplayFor(modelItem => item.Status)</span>
+                    </p>
+                    <p>
+                        <span>Category - @Html.DisplayFor(modelItem => item.Category)</span>
+                    </p>
+                    <p>
+                        <span>Task Start Date - @Html.DisplayFor(modelItem => item.TaskStartDate)</span>
+                    </p>
+                    @*<p>
+            <span>Expirtaion - @Html.DisplayFor(modelItem => item.Expiration)</span>
+        </p>*@
+                    @*<p>
+            <span>Date Posted - @Html.DisplayFor(modelItem => item.DatePosted)</span>
+        </p>*@
 
-                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Details" class="btn1 btn-primary" /></a> 
+                    <a asp-controller="TaskListItems" asp-action="CheckOut" asp-route-id="@item.Id"> <input type="submit" value="Checkout" class="btn2 btn-primary" /></a>
+         
 
-                </td>
-            </tr>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
