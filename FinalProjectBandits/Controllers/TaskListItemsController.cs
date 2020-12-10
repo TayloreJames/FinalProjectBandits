@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProjectBandits.Data;
 using FinalProjectBandits.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProjectBandits.Controllers
 {
@@ -27,6 +28,7 @@ namespace FinalProjectBandits.Controllers
         }
 
         // GET: TaskListItems1/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,6 +47,9 @@ namespace FinalProjectBandits.Controllers
 
             return View(taskListItem);
         }
+
+        //[Authorize(Policy = "CustomerOnly")]
+        [Authorize]
         public async Task<IActionResult> CheckOut(int? id)
         {
             if (id == null)
@@ -97,6 +102,7 @@ namespace FinalProjectBandits.Controllers
         }
 
         // GET: TaskListItems1/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["CustomerID"] = new SelectList(_context.Set<Customer>(), "ID", "ID");

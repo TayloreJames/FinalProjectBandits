@@ -33,6 +33,16 @@ namespace FinalProjectBandits
             services.AddTransient<IStickyService, StickyService>();
             services.AddRazorPages();
 
+            //adding this part as step 1 for authorization service configuration
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("CustomerOnly", policy =>
+            //    policy.RequireClaim("UserId"));
+                //policy.RequireAssertion(context =>
+                //context.User.HasClaim(c =>
+                //(c.Type == "Id")));
+            //});
+
             services.AddHttpClient<IMUAPService, MUAPService>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["arcBaseAddress"]);

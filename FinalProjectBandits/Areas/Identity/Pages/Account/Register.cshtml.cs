@@ -133,6 +133,11 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
                         UserId = user.Id 
                     };
 
+                    // API in here?
+
+
+
+                    //this is what's added to connect to the customer db
                     _dbContext.Customers.Add(customer);
                     await _dbContext.SaveChangesAsync();
 
