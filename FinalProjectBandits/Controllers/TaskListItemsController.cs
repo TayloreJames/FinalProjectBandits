@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using FinalProjectBandits.Data;
 using FinalProjectBandits.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Data.SqlClient;
+using System.Data.SqlClient;
 
 namespace FinalProjectBandits.Controllers
 {
@@ -21,10 +23,33 @@ namespace FinalProjectBandits.Controllers
         }
 
         // GET: TaskListItems1
-        public async Task<IActionResult> Index()
+        //original
+        //public async Task<IActionResult> Index()
+        //{
+        //    var finalProjectBanditsContext = _context.TaskListItems.Include(t => t.Customer);
+        //    return View(await finalProjectBanditsContext.ToListAsync());
+        //}
+
+        //below is the new one to get the sorting to work
+
+        public async Task<IActionResult> Index(int sortOrder)
         {
-            var finalProjectBanditsContext = _context.TaskListItems.Include(t => t.Customer);
-            return View(await finalProjectBanditsContext.ToListAsync());
+            var tasks = await _context.TaskListItems.AsNoTracking()
+                .Where(t => t.Status != Models.Enums.ItemStatus.Deleted).ToListAsync();
+            if (sortOrder == 1)
+            {
+                tasks = tasks.OrderBy(t => t.Status).ToList();
+            }
+            else if(sortOrder == 2)
+            {
+                tasks = tasks.OrderBy(t => t.Category).ToList();
+            }
+            else
+            {
+               tasks =  tasks.OrderBy(t => t.DatePosted).ToList();
+            }
+
+            return View(tasks);
         }
 
         // GET: TaskListItems1/Details/5

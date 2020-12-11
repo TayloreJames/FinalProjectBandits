@@ -20,10 +20,10 @@
                 @Html.DisplayNameFor(model => model.TaskDescription)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.ActionLink("Status", "Index", new { sortOrder = 1 })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                @Html.ActionLink("Category", "Index", new { sortOrder = 2 })
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TaskStartDate)

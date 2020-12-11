@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using FinalProjectBandits.Data;
+using FinalProjectBandits.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.Differencing;
 
 namespace FinalProjectBandits.Areas.Identity.Pages.Account.Manage
 {
@@ -13,13 +16,16 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ApplicationDbContext _dbContext;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _dbContext = dbContext;
         }
 
         public string Username { get; set; }
@@ -35,18 +41,66 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "First Name")]
+            public string First_Name { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string Last_Name { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "Street")]
+            public string Street { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "State")]
+            public string State { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "Zip")]
+            public string Zip { get; set; }
+
+            [Required]
+            //[DataType(DataType.Text)]
+            [Display(Name = "Phone")]
+            public string Phone { get; set; }
+
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
             Username = userName;
+            var currentCustomer = _dbContext.Customers.First(c => c.UserId == user.Id);
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                //PhoneNumber = phoneNumber,
+                First_Name = currentCustomer.First_Name,
+                Last_Name = currentCustomer.Last_Name,
+                Street = currentCustomer.Street,
+                City = currentCustomer.City,
+                State = currentCustomer.State,
+                Zip = currentCustomer.Zip,
+                Phone = currentCustomer.Phone,
+                Email = currentCustomer.Email,
             };
         }
 
@@ -76,16 +130,18 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
-            }
+            var currentCustomer = _dbContext.Customers.First(c => c.UserId == user.Id);
+            currentCustomer.First_Name = Input.First_Name;
+            currentCustomer.Last_Name = Input.Last_Name;
+            currentCustomer.Street = Input.Street;
+            currentCustomer.City = Input.City;
+            currentCustomer.State = Input.State;
+            currentCustomer.Zip = Input.Zip;
+            currentCustomer.Phone = Input.Phone;
+            currentCustomer.Email = Input.Email;
+            //add remaining
+
+            await _dbContext.SaveChangesAsync();
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
