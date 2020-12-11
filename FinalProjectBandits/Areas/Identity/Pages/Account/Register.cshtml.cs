@@ -7,6 +7,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using FinalProjectBandits.Data;
 using FinalProjectBandits.Models;
+using FinalProjectBandits.Services;
 using Google.GData.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -27,13 +28,15 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _dbContext;
+        private readonly ICombinedAPIService _combinedAPIService;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ApplicationDbContext dbContext
+            ApplicationDbContext dbContext,
+            ICombinedAPIService combinedAPIService
             )
         {
             _userManager = userManager;
@@ -41,6 +44,7 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _dbContext = dbContext;
+            _combinedAPIService = combinedAPIService;
         }
 
         [BindProperty]
@@ -134,9 +138,21 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
                     };
 
                     // API in here?
+                    var apiObject = await _combinedAPIService.GetCombinedObject($"{customer.Street}%20{customer.City}" +
+                        $"%20{customer.State}%20{customer.Zip}");
 
+                    var coordinatePoint = new CoordinatePoint
+                    {
+                        Latitude = apiObject.GeocodingObject.Results[0].Geometry.Location.Lat,
+                        Longitude = apiObject.GeocodingObject.Results[0].Geometry.Location.Lng,
+                    };
 
-
+                    foreach (var featureSet in apiObject.MUAPObject.Features)
+                    {
+  
+                       var isInPolygon = _combinedAPIService.IsPointInPolygon(coordinatePoint, featureSet.Geometry.Rings2);
+                       var objectID = featureSet.Attributes.ObjectId;
+                    }
                     //this is what's added to connect to the customer db
                     _dbContext.Customers.Add(customer);
                     await _dbContext.SaveChangesAsync();

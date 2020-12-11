@@ -7,13 +7,15 @@ namespace FinalProjectBandits.Services
     public interface ICombinedAPIService
     {
         Task<CombinedAPIObject> GetCombinedObject(string address);
+        bool IsPointInPolygon(CoordinatePoint p, RingPolygons polygon);
+
     }
 
     public class CombinedAPIService : ICombinedAPIService
     {
         private IMUAPService _muapService;
         private IGeocodingService _geocodingService;
-        private const string _neighborhoods = "1%3D1";
+        private const string _allData = "1%3D1";
 
         public CombinedAPIService(IMUAPService muapService, IGeocodingService geocodingService)
         {
@@ -23,14 +25,14 @@ namespace FinalProjectBandits.Services
 
         public async Task<CombinedAPIObject> GetCombinedObject(string address)
         {
-            var muapResults = await _muapService.GetMUAPResults(_neighborhoods);
+            var muapResults = await _muapService.GetMUAPResults(_allData);
             var geocodingResults = await _geocodingService.GetGeocodingResults(address);
             foreach (var feature in muapResults.Features)
             {
                 feature.Geometry.FlattenRings();
             }
 
-            var combinedAPIObject = new CombinedAPIObject() { MUAPObject = muapResults, GeocodingObject = geocodingResults };
+            var combinedAPIObject = new CombinedAPIObject() { GeocodingObject = geocodingResults, MUAPObject = muapResults };
             return combinedAPIObject;
         }
 
@@ -84,8 +86,9 @@ namespace FinalProjectBandits.Services
 
     public class CombinedAPIObject
     {
-        public MUAPObject MUAPObject { get; set; }
         public GeocodingObject GeocodingObject { get; set; }
+        public MUAPObject MUAPObject { get; set; }
+        
     }
 
 }
