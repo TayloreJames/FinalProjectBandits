@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,7 +8,7 @@ namespace FinalProjectBandits.Services
     public interface ICombinedAPIService
     {
         Task<CombinedAPIObject> GetCombinedObject(string address);
-        bool IsPointInPolygon(CoordinatePoint p, RingPolygons polygon);
+        bool IsPointInPolygon(CoordinatePoint point, List<CoordinatePoint> polygon);
 
     }
 
@@ -35,54 +36,59 @@ namespace FinalProjectBandits.Services
             var combinedAPIObject = new CombinedAPIObject() { GeocodingObject = geocodingResults, MUAPObject = muapResults };
             return combinedAPIObject;
         }
-
-        public bool IsPointInPolygon(CoordinatePoint p, RingPolygons polygon)
+        
+        public bool IsPointInPolygon(CoordinatePoint point, List<CoordinatePoint> polygon)
         {
-            double minX = polygon.CoordinateSet.Select(_ => _.Coordinates.Min(x => x.Longitude)).First();
-            double maxX = polygon.CoordinateSet.Select(_ => _.Coordinates.Max(x => x.Longitude)).First();
-            double minY = polygon.CoordinateSet.Select(_ => _.Coordinates.Min(x => x.Latitude)).First();
-            double maxY = polygon.CoordinateSet.Select(_ => _.Coordinates.Max(x => x.Latitude)).First();
-            for (int i = 1; i < polygon.CoordinateSet.Count; i++)
+            double minX = polygon[0].Longitude;
+            //double minX = polygon.CoordinateSet.Select(_ => _.Coordinates.Min(x => x.Longitude)).First();
+            double maxX = polygon[0].Longitude;
+            //double maxX = polygon.CoordinateSet.Select(_ => _.Coordinates.Max(x => x.Longitude)).First();double minX = polygon[0].Coordinates[0].Longitude;
+            double minY = polygon[0].Latitude;
+            //double minY = polygon.CoordinateSet.Select(_ => _.Coordinates.Min(x => x.Latitude)).First();
+            double maxY = polygon[0].Latitude;
+            //double maxY = polygon.CoordinateSet.Select(_ => _.Coordinates.Max(x => x.Latitude)).First();
+            for (int i = 1; i < polygon.Count; i++)
             {
-                var q = polygon.CoordinateSet.ElementAt(i);
+                var q = polygon.ElementAt(i);
 
-                for (int k = 0; k < q.Coordinates.Count; k++)
-                {
-                    minX = Math.Min(q.Coordinates.ElementAt(k).Longitude, minX);
-                    maxX = Math.Max(q.Coordinates.ElementAt(k).Longitude, maxX);
-                    minY = Math.Min(q.Coordinates.ElementAt(k).Latitude, minY);
-                    maxY = Math.Max(q.Coordinates.ElementAt(k).Latitude, maxY);
-                }
+                //for (int k = 0; k < q.Coordinates.Count; k++)
+                //{
+                    minX = Math.Min(q.Longitude, minX);
+                    maxX = Math.Max(q.Longitude, maxX);
+                    minY = Math.Min(q.Latitude, minY);
+                    maxY = Math.Max(q.Latitude, maxY);
+                //}
 
 
             }
 
-            if (p.Longitude < minX || p.Longitude > maxX || p.Latitude < minY || p.Latitude > maxY)
+            if (point.Longitude < minX || point.Longitude > maxX || point.Latitude < minY || point.Latitude > maxY)
             {
                 return false;
             }
 
             // https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html
             bool inside = false;
-            for (int k = 0; k < polygon.CoordinateSet.Count; k++)
+            //for (int i = 0; i < polygon.Count; i++)
 
-            {
-                var q = polygon.CoordinateSet.ElementAt(k);
-                for (int i = 0, j = q.Coordinates.Count - 1; i < q.Coordinates.Count; j = i++)
+            //{
+            //    var q = polygon.CoordinateSet.ElementAt(k);
+                for (int i = 0, j = polygon.Count - 1; i < polygon.Count; j = i++)
                 {
 
-                    if ((q.Coordinates.ElementAt(i).Latitude > p.Latitude) != (q.Coordinates.ElementAt(j).Latitude > p.Latitude) &&
-                         p.Longitude < (q.Coordinates.ElementAt(j).Longitude - q.Coordinates.ElementAt(i).Longitude) * (p.Latitude - q.Coordinates.ElementAt(i).Latitude) / (q.Coordinates.ElementAt(j).Latitude - q.Coordinates.ElementAt(i).Latitude) + q.Coordinates.ElementAt(i).Longitude) ;
+                    if ((polygon[i].Latitude > point.Latitude) != (polygon[j].Latitude > point.Latitude) &&
+                         point.Longitude < (polygon[j].Longitude - polygon[i].Longitude) * (point.Latitude - polygon[i].Latitude) / (polygon[j].Latitude - polygon[i].Latitude) + polygon[i].Longitude) 
                     {
                         inside = !inside;
                     }
                 }
-            }
+            //}
 
             return inside;
         }
-
+        
     }
+
 
     public class CombinedAPIObject
     {

@@ -102,21 +102,41 @@ namespace FinalProjectBandits.Services
     {
         public float[][][] Rings { get; set; }
         public RingPolygons Rings2 { get; set; }
+        public Polygon Polygon { get; set; }
 
+        public void FlattenRings()
+        {
+            Polygon = new Polygon();
+            Polygon.Coordinates = new List<CoordinatePoint>();
+            foreach (var polygon in Rings)
+            {
+                
+                foreach (var coordinatePoint in polygon)
+                {
+                    var point = new CoordinatePoint {
+                        Latitude = coordinatePoint[1],
+                        Longitude= coordinatePoint[0]
+                    };
+
+                    Polygon.Coordinates.Add(point);
+                }
+            }
+        }
+        /*
         public void FlattenRings()
         {
 
             foreach (var ringPolygon in Rings)
             {
                 Rings2 = new RingPolygons();
-                Rings2.CoordinateSet = new List<CoordinatePair>();
+                Rings2.InnerAndOuterPolygon = new List<Polygon>();
 
                 foreach (var coordinatePair in ringPolygon)
                 {
                     var coordinatePoints = new List<CoordinatePoint>();
                     //var coordinatePair = new List<Coo>
                     //coordinateSetObject.Coordinates.Add(coordinate);
-                    var coordinatePairs = new CoordinatePair();
+                    var coordinatePairs = new Polygon();
                     var finalCoordinatePoint = new CoordinatePoint();
                     foreach (var coordinatePoint in coordinatePair)
                     {
@@ -130,23 +150,22 @@ namespace FinalProjectBandits.Services
                     coordinatePoints.Add(finalCoordinatePoint);
                     coordinatePairs.Coordinates = coordinatePoints;
 
-                    Rings2.CoordinateSet.Add(coordinatePairs);
+                    Rings2.InnerAndOuterPolygon.Add(coordinatePairs);
                 }
-
-
+                
             }
-        }
+        }*/
 
 
     }
-
+    //list of polygons
     public class RingPolygons
     {
-        public List<CoordinatePair> CoordinateSet { get; set; }
+        public List<Polygon> InnerAndOuterPolygon { get; set; }
     }
 
-    //lat and long
-    public class CoordinatePair
+    //polygon
+    public class Polygon
     {
         //public float Lat { get; set; }
         //public float Long { get; set; }

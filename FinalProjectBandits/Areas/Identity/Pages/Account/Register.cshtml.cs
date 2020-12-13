@@ -29,6 +29,9 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _dbContext;
         private readonly ICombinedAPIService _combinedAPIService;
+        private int _objectID = 0;
+        private FeatureSet _featureSet = new FeatureSet();
+        private bool _isInPolygon = false;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -53,6 +56,8 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+
+        //public FeatureSet FeatureSet { get; set; }
 
         public class InputModel
         {
@@ -138,21 +143,28 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account
                     };
 
                     // API in here?
-                    var apiObject = await _combinedAPIService.GetCombinedObject($"{customer.Street}%20{customer.City}" +
-                        $"%20{customer.State}%20{customer.Zip}");
+                    var apiObject = await _combinedAPIService.GetCombinedObject($"{customer.Street} {customer.City}, " +
+                        $"{customer.State} {customer.Zip}");
 
-                    var coordinatePoint = new CoordinatePoint
+                    var newCustomerAddress = new CoordinatePoint
                     {
                         Latitude = apiObject.GeocodingObject.Results[0].Geometry.Location.Lat,
                         Longitude = apiObject.GeocodingObject.Results[0].Geometry.Location.Lng,
                     };
 
-                    foreach (var featureSet in apiObject.MUAPObject.Features)
+                    foreach (FeatureSet featureSet in apiObject.MUAPObject.Features)
                     {
   
-                       var isInPolygon = _combinedAPIService.IsPointInPolygon(coordinatePoint, featureSet.Geometry.Rings2);
-                       var objectID = featureSet.Attributes.ObjectId;
+                        var isInPolygon = _combinedAPIService.IsPointInPolygon(newCustomerAddress, featureSet.Geometry.Polygon.Coordinates);
+                        if (isInPolygon == true)
+                        {
+                            customer.MuapIndex = featureSet.Attributes.Muap_index;
+                            break;
+
+                        }
                     }
+                    
+
                     //this is what's added to connect to the customer db
                     _dbContext.Customers.Add(customer);
                     await _dbContext.SaveChangesAsync();

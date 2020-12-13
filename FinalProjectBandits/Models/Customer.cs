@@ -18,7 +18,7 @@ namespace FinalProjectBandits.Models
         public string State { get; set; }
         public string Zip { get; set; }
         public string Phone { get; set; }
-        public double MuapIndex { get; set; }
+        public double? MuapIndex { get; set; }
         public string Password { get; set; }
         //public string Skill1 { get; set; }
         //public string Skill2 { get; set; }
