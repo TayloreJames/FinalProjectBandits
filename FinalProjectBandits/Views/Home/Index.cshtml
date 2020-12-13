@@ -10,35 +10,8 @@
     You can register for a new account and login to be able to post things you need, as well as check out where you can help others. View a map in the About section to see where some of your neighborhoods are most in need to be able to have the most impact with your help.
 </p>
 
-@*<table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.TaskTitle)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TaskDescription)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TaskStartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Expiration)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DatePosted)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+
+            @*@foreach (var item in Model)
             {
                 <tr>
                     <td>
@@ -83,15 +56,6 @@
     .card-header {
         font-weight: bold;
         font-size: 16px;
-    }
-
-    .card {
-        max-width: 18rem;
-        background-color: green;
-        color: white;
-/*        border-style: solid;
-        border-color: #ff0000;
-        border-width: 3px;*/
     }
 
     .card-header {
@@ -140,36 +104,46 @@
     }
 </style>
 
+
+
 <div class="flex-container">
     <div class="card-columns">
         @foreach (var item in Model)
-        {
-            <div class="card">
+            {
+
+                var MuapIndex = item.Customer.MuapIndex;
+                var card = " ";
+                if (MuapIndex >= 0 && MuapIndex <= 39)
+                {
+                    card = "card bg-danger text-white";
+                }
+                else if (MuapIndex >= 40 && MuapIndex <= 62)
+                {
+                    card = "card bg-warning text-white";
+                }
+                else if (MuapIndex >= 63 && MuapIndex <= 100)
+                {
+                    card = "card bg-success text-white";
+                }
+
+            <div class="@card" style="max-width: 18rem;">
                 <div class="card-header"><strong>@Html.DisplayFor(modelItem => item.TaskTitle)</strong></div>
                 <div class="card-body">
 
                     <p>
-                        @*<span>Description - @Html.DisplayFor(modelItem => item.TaskDescription)</span>*@
-                        <span><strong>Description -</strong> @Html.Raw((item.TaskDescription.Length > 50 ? item.TaskDescription.Substring(0, 50) + "..." : item.TaskDescription))</span>
+                        <span> @Html.Raw((item.TaskDescription.Length > 50 ? item.TaskDescription.Substring(0, 50) + "..." : item.TaskDescription))</span>
                     </p>
                     <p>
                         <span>
                             <strong>Status - </strong>@Html.DisplayFor(modelItem => item.Status)
                         </span>
                     </p>
-                    <p>
+                    @*<p>
                         <span><strong>Category -</strong> @Html.DisplayFor(modelItem => item.Category)</span>
-                    </p>
+                    </p>*@
                     <p>
-                        @*<span><strong>Task Start Date - </strong>@Html.DisplayFor(modelItem => item.TaskStartDate)</span>*@
                         <span><strong>Task Start Date - </strong>@Convert.ToDateTime(item.TaskStartDate).ToString("MM/dd/yyyy")</span>
                     </p>
-                    @*<p>
-                            <span>Expirtaion - @Html.DisplayFor(modelItem => item.Expiration)</span>
-                        </p>*@
-                    @*<p>
-                            <span>Date Posted - @Html.DisplayFor(modelItem => item.DatePosted)</span>
-                        </p>*@
 
                     <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Details" class="btn1 btn-primary" /></a>
                     <a asp-controller="TaskListItems" asp-action="CheckOut" asp-route-id="@item.Id"> <input type="submit" value="Checkout" class="btn2 btn-primary" /></a>

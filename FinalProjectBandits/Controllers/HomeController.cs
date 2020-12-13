@@ -27,6 +27,12 @@ namespace FinalProjectBandits.Controllers
             var taskListItems = await _applicationDbContext.TaskListItems
                 .OrderBy(item => item.DatePosted)
                 .Take(10).ToListAsync();
+            
+            foreach (var item in taskListItems)
+            {
+                var customer = _applicationDbContext.Customers.SingleOrDefault(x => x.ID == item.CustomerID);
+                item.Customer = customer;
+            }
             return View(taskListItems);
 
             /*List<TaskListItem> top10item = FakeDataSeed
