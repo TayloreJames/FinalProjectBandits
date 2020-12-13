@@ -85,6 +85,23 @@
         font-size: 16px;
     }
 
+    .card {
+        max-width: 18rem;
+        background-color: green;
+        color: white;
+/*        border-style: solid;
+        border-color: #ff0000;
+        border-width: 3px;*/
+    }
+
+    .card-header {
+        text-align: center;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
     .btn1 {
         background-color: deepskyblue;
         border: none;
@@ -98,7 +115,6 @@
         margin: 4px 2px;
         opacity: 1;
         transition: 0.3s;
-        /*display: inline-block;*/
     }
 
     .btn2 {
@@ -113,49 +129,50 @@
         font-size: 16px;
         margin: 4px 2px;
         opacity: 1;
-        transition: 0.3s;
-        /*display: inline-block;*/
     }
 
-        .btn1:hover {
-            opacity: 0.6
-        }
-        .btn2:hover {
-            opacity: 0.6
-        }
+    .btn1:hover {
+        opacity: 0.6
+    }
+
+    .btn2:hover {
+        opacity: 0.6
+    }
 </style>
 
 <div class="flex-container">
     <div class="card-columns">
         @foreach (var item in Model)
         {
-            <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-header">@Html.DisplayFor(modelItem => item.TaskTitle)</div>
+            <div class="card">
+                <div class="card-header"><strong>@Html.DisplayFor(modelItem => item.TaskTitle)</strong></div>
                 <div class="card-body">
 
                     <p>
                         @*<span>Description - @Html.DisplayFor(modelItem => item.TaskDescription)</span>*@
-                        <span>Description - @Html.Raw((item.TaskDescription.Length > 50 ? item.TaskDescription.Substring(0, 50) + "..." : item.TaskDescription))</span>
+                        <span><strong>Description -</strong> @Html.Raw((item.TaskDescription.Length > 50 ? item.TaskDescription.Substring(0, 50) + "..." : item.TaskDescription))</span>
                     </p>
                     <p>
-                        <span>Status - @Html.DisplayFor(modelItem => item.Status)</span>
+                        <span>
+                            <strong>Status - </strong>@Html.DisplayFor(modelItem => item.Status)
+                        </span>
                     </p>
                     <p>
-                        <span>Category - @Html.DisplayFor(modelItem => item.Category)</span>
+                        <span><strong>Category -</strong> @Html.DisplayFor(modelItem => item.Category)</span>
                     </p>
                     <p>
-                        <span>Task Start Date - @Html.DisplayFor(modelItem => item.TaskStartDate)</span>
+                        @*<span><strong>Task Start Date - </strong>@Html.DisplayFor(modelItem => item.TaskStartDate)</span>*@
+                        <span><strong>Task Start Date - </strong>@Convert.ToDateTime(item.TaskStartDate).ToString("MM/dd/yyyy")</span>
                     </p>
                     @*<p>
-            <span>Expirtaion - @Html.DisplayFor(modelItem => item.Expiration)</span>
-        </p>*@
+                            <span>Expirtaion - @Html.DisplayFor(modelItem => item.Expiration)</span>
+                        </p>*@
                     @*<p>
-            <span>Date Posted - @Html.DisplayFor(modelItem => item.DatePosted)</span>
-        </p>*@
+                            <span>Date Posted - @Html.DisplayFor(modelItem => item.DatePosted)</span>
+                        </p>*@
 
-                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Details" class="btn1 btn-primary" /></a> 
+                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Details" class="btn1 btn-primary" /></a>
                     <a asp-controller="TaskListItems" asp-action="CheckOut" asp-route-id="@item.Id"> <input type="submit" value="Checkout" class="btn2 btn-primary" /></a>
-         
 
                 </div>
             </div>
