@@ -5,11 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>View All Task List Items</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<p>Items are sorted by the most recent item posted. Click the headers "Status" or "Category" to sort in a different way.</p>
 <table class="table">
     <thead>
         <tr>
@@ -34,10 +35,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.DatePosted)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Customer)
-            </th>
-            <th></th>
+
+
         </tr>
     </thead>
     <tbody>
@@ -64,13 +63,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DatePosted)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.ID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
             </td>
         </tr>
 }
