@@ -139,7 +139,7 @@ namespace FinalProjectBandits.Areas.Identity.Pages.Account.Manage
             currentCustomer.Zip = Input.Zip;
             currentCustomer.Phone = Input.Phone;
             currentCustomer.Email = Input.Email;
-            //add remaining
+            //add remaining?
 
             await _dbContext.SaveChangesAsync();
 
