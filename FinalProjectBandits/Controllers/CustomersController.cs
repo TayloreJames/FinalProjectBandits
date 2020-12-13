@@ -9,6 +9,7 @@ using FinalProjectBandits.Data;
 using FinalProjectBandits.Models;
 using Microsoft.AspNetCore.Identity;
 using FinalProjectBandits.Services;
+using System.Security.Claims;
 
 namespace FinalProjectBandits.Controllers
 {
@@ -27,6 +28,17 @@ namespace FinalProjectBandits.Controllers
             var finalProjectBanditsContext = _context.Customers;
                 //.Include(c => c.User);
             return View(await finalProjectBanditsContext.ToListAsync());
+        }
+
+        //[Authorize]
+        public async Task<IActionResult> UserDetail()
+        {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var details = await _context.Customers
+                .Include(c => c.Items)
+                .FirstOrDefaultAsync(customer => customer.UserId == userId);
+
+            return View(details);
         }
 
         // GET: Customers/Details/5

@@ -27,7 +27,7 @@ namespace FinalProjectBandits.Models
         // this is what Cory helped with to define the key relationships in ApplicationDbContext
         //public string Email { get; set; }
 
-        public List<TaskListItem> Items { get; set; }
+        public List<TaskListItem> Items { get; set; } = new List<TaskListItem>();
         public string UserId { get; set; }
         //public IdentityUser User { get; set; }
 
