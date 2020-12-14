@@ -30,7 +30,7 @@ namespace FinalProjectBandits
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
-            services.AddTransient<IStickyService, StickyService>();
+            //services.AddTransient<IStickyService, StickyService>();
             services.AddRazorPages();
 
             //adding this part as step 1 for authorization service configuration
