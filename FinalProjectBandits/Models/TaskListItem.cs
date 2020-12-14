@@ -27,6 +27,7 @@ namespace FinalProjectBandits.Models
         //public string Id { get; set; }
         //public TaskListItem Item { get; set; }
 
+        //public string CheckedOutBy { get; set; }
         public int CustomerID { get; set; }
         public Customer Customer { get; set; }
     }

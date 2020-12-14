@@ -10,6 +10,7 @@ using FinalProjectBandits.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
 using System.Data.SqlClient;
+using System.Security.Claims;
 
 namespace FinalProjectBandits.Controllers
 {
@@ -141,10 +142,16 @@ namespace FinalProjectBandits.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TaskTitle,TaskDescription,Status,Category,TaskStartDate,Expiration,DatePosted,CustomerID")] TaskListItem taskListItem)
+        public async Task<IActionResult> Create([Bind("Id,TaskTitle,TaskDescription,Status,Category,TaskStartDate,Expiration,DatePosted")] TaskListItem taskListItem)
         {
             if (ModelState.IsValid)
             {
+                var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var customer = await _context.Customers                
+                    .FirstOrDefaultAsync(customer => customer.UserId == userId);
+
+                taskListItem.CustomerID = customer.ID;
+
                 _context.Add(taskListItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
