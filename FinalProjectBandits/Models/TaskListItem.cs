@@ -14,8 +14,8 @@ namespace FinalProjectBandits.Models
         public string TaskTitle { get; set; }
         public string TaskDescription { get; set; }
 
-        [EnumDataType(typeof(ItemStatus))]
-        public ItemStatus Status { get; set; }
+        //[EnumDataType(typeof(ItemStatus))]
+        //public ItemStatus Status { get; set; }
 
         [EnumDataType(typeof(ItemCategory))]
         public ItemCategory Category { get; set; }
