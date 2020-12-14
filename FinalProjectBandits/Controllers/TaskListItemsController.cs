@@ -185,7 +185,7 @@ namespace FinalProjectBandits.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,TaskTitle,TaskDescription,Status,Category,TaskStartDate,Expiration,DatePosted,CustomerID")] TaskListItem taskListItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TaskTitle,TaskDescription,Status,Category,TaskStartDate,Expiration,DatePosted")] TaskListItem taskListItem)
         {
             if (id != taskListItem.Id)
             {
@@ -196,6 +196,12 @@ namespace FinalProjectBandits.Controllers
             {
                 try
                 {
+                    var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    var customer = await _context.Customers
+                        .FirstOrDefaultAsync(customer => customer.UserId == userId);
+
+                    taskListItem.CustomerID = customer.ID;
+
                     _context.Update(taskListItem);
                     await _context.SaveChangesAsync();
                 }
