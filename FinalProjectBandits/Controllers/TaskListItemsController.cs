@@ -49,7 +49,11 @@ namespace FinalProjectBandits.Controllers
             {
                tasks =  tasks.OrderBy(t => t.DatePosted).ToList();
             }
-
+            foreach(var item in tasks)
+            {
+                var customer = _context.Customers.SingleOrDefault(x => x.ID == item.CustomerID);
+                item.Customer = customer;
+            }
             return View(tasks);
         }
 

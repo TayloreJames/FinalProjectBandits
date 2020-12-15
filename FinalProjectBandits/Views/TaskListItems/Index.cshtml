@@ -40,34 +40,52 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Expiration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatePosted)
-            </td>
+        @foreach (var item in Model)
+        {
 
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-            </td>
-        </tr>
+            var MuapIndex = item.Customer.MuapIndex;
+            var card = " ";
+            if (MuapIndex >= 0 && MuapIndex <= 39)
+            {
+                card = "#dc3545";
+            }
+            else if (MuapIndex >= 40 && MuapIndex <= 62)
+            {
+                card = "#ffc107";
+            }
+            else if (MuapIndex >= 63 && MuapIndex <= 100)
+            {
+                card = "#28a745";
+            }
+
+            <tr bgcolor = "@card">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Expiration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+
 }
-    </tbody>
+        </tbody>
 </table>
