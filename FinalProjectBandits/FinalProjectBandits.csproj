@@ -25,6 +25,5 @@
 
   <ItemGroup>
     <Content Remove="Views\TaskListItems\Edit.cshtml" />
-    <Content Remove="Views\Customers\UserDetail.cshtml" />
   </ItemGroup>
 </Project>

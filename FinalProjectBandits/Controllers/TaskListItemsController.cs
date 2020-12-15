@@ -82,12 +82,15 @@ namespace FinalProjectBandits.Controllers
             {
                 return NotFound();
             }
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var details = await _context.Customers.AsNoTracking()
+                .FirstOrDefaultAsync(customer => customer.UserId == userId);
 
             var taskListItem = await _context.TaskListItems
                 .Include(t => t.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (taskListItem == null)
+            if (taskListItem == null || details == null)
             {
                 return NotFound();
             }
@@ -95,6 +98,7 @@ namespace FinalProjectBandits.Controllers
             if (taskListItem.Status == Models.Enums.ItemStatus.Open)
             {
                 taskListItem.Status = Models.Enums.ItemStatus.CheckedOut;
+                taskListItem.HelperCustomerID = details.ID;
                 _context.Update(taskListItem);
                 await _context.SaveChangesAsync();
             }

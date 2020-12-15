@@ -7,11 +7,19 @@
 
 <h1>Welcome to PostHelpGet.com</h1>
 <p>
-    You can register for a new account and login to be able to post things you need, as well as check out where you can help others. View a map in the About section to see where some of your neighborhoods are most in need to be able to have the most impact with your help.
+    This site displays sticky notes that represent <b>needs from people in your community</b>.
+    They can be as simple as mowing a lawn, or bringing someone groceries.
+<p>You have to be registered and logged in in order to create new needs and to checkout items so you can fulfill them.
+</p>
+<p>
+    Items <b>shaded in red</b> represent those people <b>who need your help the most</b>.
+    It means they live in a medically-underserved area in Detroit.
+    The items <b>shaded in yellow</b> represent those people still in need, but to a lesser degree that those shaded in red. 
+    Visit our About page to learn more.
 </p>
 
 
-            @*@foreach (var item in Model)
+@*@foreach (var item in Model)
             {
                 <tr>
                     <td>
@@ -50,7 +58,7 @@
     .flex-container {
         display: flex;
         flex-wrap: wrap;
-        background-color: palegoldenrod;
+        background-color: cornsilk;
     }
 
     .card-header {
@@ -109,22 +117,22 @@
 <div class="flex-container">
     <div class="card-columns">
         @foreach (var item in Model)
-            {
+        {
 
-                var MuapIndex = item.Customer.MuapIndex;
-                var card = " ";
-                if (MuapIndex >= 0 && MuapIndex <= 39)
-                {
-                    card = "card bg-danger text-white";
-                }
-                else if (MuapIndex >= 40 && MuapIndex <= 62)
-                {
-                    card = "card bg-warning text-white";
-                }
-                else if (MuapIndex >= 63 && MuapIndex <= 100)
-                {
-                    card = "card bg-success text-white";
-                }
+            var MuapIndex = item.Customer.MuapIndex;
+            var card = " ";
+            if (MuapIndex >= 0 && MuapIndex <= 39)
+            {
+                card = "card bg-danger text-white";
+            }
+            else if (MuapIndex >= 40 && MuapIndex <= 62)
+            {
+                card = "card bg-warning text-white";
+            }
+            else if (MuapIndex >= 63 && MuapIndex <= 100)
+            {
+                card = "card bg-success text-white";
+            }
 
             <div class="@card" style="max-width: 18rem;">
                 <div class="card-header"><strong>@Html.DisplayFor(modelItem => item.TaskTitle)</strong></div>
@@ -139,8 +147,8 @@
                         </span>
                     </p>
                     @*<p>
-                        <span><strong>Category -</strong> @Html.DisplayFor(modelItem => item.Category)</span>
-                    </p>*@
+                            <span><strong>Category -</strong> @Html.DisplayFor(modelItem => item.Category)</span>
+                        </p>*@
                     <p>
                         <span><strong>Task Start Date - </strong>@Convert.ToDateTime(item.TaskStartDate).ToString("MM/dd/yyyy")</span>
                     </p>

@@ -39,7 +39,7 @@ namespace FinalProjectBandits.Controllers
                 .FirstOrDefaultAsync(customer => customer.UserId == userId);
 
             var tasksUserIsHelperFor = await _context.TaskListItems
-                .AsNoTracking().Where(item => item.HelperCustomerId == userId).ToListAsync();
+                .AsNoTracking().Where(item => item.HelperCustomerID == details.ID).ToListAsync();
 
             details.Items.AddRange(tasksUserIsHelperFor);
 

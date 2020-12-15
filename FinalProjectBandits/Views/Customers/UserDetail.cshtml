@@ -1,77 +1,149 @@
 ﻿@model Customer
 
-    @{
-        ViewData["Title"] = "User Details";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-    <h1>Hello @Html.DisplayFor(model => model.First_Name)!</h1>
+<h1>Hello @Html.DisplayFor(model => model.First_Name)!</h1>
 
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].TaskTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].TaskDescription)
+            </th>
+            <th>
+                @Html.ActionLink("Status", "Index", new { sortOrder = 1 })
+            </th>
+            <th>
+                @Html.ActionLink("Category", "Index", new { sortOrder = 2 })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].TaskStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Expiration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].DatePosted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Customer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Items.Where(t => t.HelperCustomerID == null || t.HelperCustomerID != t.Id).ToList())
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Items[0].TaskTitle)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Items[0].TaskDescription)
-                </th>
-                <th>
-                    @Html.ActionLink("Status", "Index", new { sortOrder = 1 })
-                </th>
-                <th>
-                    @Html.ActionLink("Category", "Index", new { sortOrder = 2 })
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Items[0].TaskStartDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Items[0].Expiration)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Items[0].DatePosted)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Items[0].Customer)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            
-
-            @foreach (var item in Model.Items) {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TaskTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TaskDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TaskStartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Expiration)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DatePosted)
-                    </td>
-                    @*<td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Expiration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                </td>
+                @*<td>
                         @Html.DisplayFor(modelItem => item.Customer.ID)
                     </td>*@
-                    <td>
-                        <a asp-controller="TaskListItems" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-controller="TaskListItems" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                <td>
+                    <a asp-controller="TaskListItems" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-controller="TaskListItems" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].TaskTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].TaskDescription)
+            </th>
+            <th>
+                @Html.ActionLink("Status", "Index", new { sortOrder = 1 })
+            </th>
+            <th>
+                @Html.ActionLink("Category", "Index", new { sortOrder = 2 })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].TaskStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Expiration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].DatePosted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Items[0].Customer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+
+
+        @foreach (var item in Model.Items.Where(t => t.HelperCustomerID == t.Id).ToList())
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Expiration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Customer.ID)
+                    </td>*@
+                <td>
+                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
