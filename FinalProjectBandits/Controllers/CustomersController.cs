@@ -34,9 +34,14 @@ namespace FinalProjectBandits.Controllers
         public async Task<IActionResult> UserDetail()
         {
             var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var details = await _context.Customers
+            var details = await _context.Customers.AsNoTracking()
                 .Include(c => c.Items)
                 .FirstOrDefaultAsync(customer => customer.UserId == userId);
+
+            var tasksUserIsHelperFor = await _context.TaskListItems
+                .AsNoTracking().Where(item => item.HelperCustomerId == userId).ToListAsync();
+
+            details.Items.AddRange(tasksUserIsHelperFor);
 
             return View(details);
         }

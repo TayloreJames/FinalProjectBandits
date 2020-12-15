@@ -4,14 +4,16 @@ using FinalProjectBandits.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FinalProjectBandits.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201215001917_AddHelperCustomerTake2")]
+    partial class AddHelperCustomerTake2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,7 +129,7 @@ namespace FinalProjectBandits.Data.Migrations
                     b.Property<DateTime>("Expiration")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HelperCustomerID")
+                    b.Property<int>("HelperCustomerID")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -156,6 +158,7 @@ namespace FinalProjectBandits.Data.Migrations
                             CustomerID = 1,
                             DatePosted = new DateTime(2020, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Expiration = new DateTime(2020, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HelperCustomerID = 0,
                             Status = 0,
                             TaskDescription = "I need someone to rake my very large lawn. I'm old and can't do it.",
                             TaskStartDate = new DateTime(2020, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),

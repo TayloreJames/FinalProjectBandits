@@ -14,8 +14,8 @@ namespace FinalProjectBandits.Models
         public string TaskTitle { get; set; }
         public string TaskDescription { get; set; }
 
-        //[EnumDataType(typeof(ItemStatus))]
-        //public ItemStatus Status { get; set; }
+        [EnumDataType(typeof(ItemStatus))]
+        public ItemStatus Status { get; set; }
 
         [EnumDataType(typeof(ItemCategory))]
         public ItemCategory Category { get; set; }
@@ -30,5 +30,6 @@ namespace FinalProjectBandits.Models
         //public string CheckedOutBy { get; set; }
         public int CustomerID { get; set; }
         public Customer Customer { get; set; }
+        public int? HelperCustomerID { get; set; }
     }
 }
