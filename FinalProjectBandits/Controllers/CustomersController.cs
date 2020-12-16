@@ -42,6 +42,7 @@ namespace FinalProjectBandits.Controllers
                 .AsNoTracking().Where(item => item.HelperCustomerID == details.ID).ToListAsync();
 
             details.Items.AddRange(tasksUserIsHelperFor);
+ 
 
             return View(details);
         }

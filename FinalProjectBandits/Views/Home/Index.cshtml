@@ -19,41 +19,6 @@
 </p>
 
 
-@*@foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TaskTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TaskDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TaskStartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Expiration)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DatePosted)
-                    </td>
-
-                    <td>
-
-                        <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a>
-
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>*@
-
 <style>
     .flex-container {
         display: flex;
@@ -125,11 +90,11 @@
             {
                 card = "card bg-danger text-white";
             }
-            else if (MuapIndex >= 40 && MuapIndex <= 62)
+            else if (MuapIndex > 39 && MuapIndex <= 58)
             {
                 card = "card bg-warning text-white";
             }
-            else if (MuapIndex >= 63 && MuapIndex <= 100)
+            else if (MuapIndex > 58 && MuapIndex <= 100)
             {
                 card = "card bg-success text-white";
             }
@@ -146,9 +111,7 @@
                             <strong>Status - </strong>@Html.DisplayFor(modelItem => item.Status)
                         </span>
                     </p>
-                    @*<p>
-                            <span><strong>Category -</strong> @Html.DisplayFor(modelItem => item.Category)</span>
-                        </p>*@
+                    
                     <p>
                         <span><strong>Task Start Date - </strong>@Convert.ToDateTime(item.TaskStartDate).ToString("MM/dd/yyyy")</span>
                     </p>
