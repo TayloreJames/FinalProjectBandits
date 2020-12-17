@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FinalProjectBandits.Services;
 using System;
+using FinalProjectBandits.Configuration;
 
 namespace FinalProjectBandits
 {
@@ -30,18 +31,16 @@ namespace FinalProjectBandits
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
-            //services.AddTransient<IStickyService, StickyService>();
+            
             services.AddRazorPages();
 
-            //adding this part as step 1 for authorization service configuration
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("CustomerOnly", policy =>
-            //    policy.RequireClaim("UserId"));
-                //policy.RequireAssertion(context =>
-                //context.User.HasClaim(c =>
-                //(c.Type == "Id")));
-            //});
+            var apiKey = Configuration["googleApiKey"];
+            var googleMapsConfig = new GoogleMapsConfig()
+            {
+                ApiKey = apiKey
+            };
+            services.AddSingleton(googleMapsConfig);
+
 
             services.AddHttpClient<IMUAPService, MUAPService>(client =>
             {

@@ -103,9 +103,7 @@ namespace FinalProjectBandits.Controllers
             {
                 return NotFound();
             }
-          //  string address = customer.Street + "," + customer.City + "," + customer.State + " " + customer.Zip;
-          //  bool inMuap = MuapUtility.IsAddressInMUAPArea(address);
-          //  ViewData["UserId"] = new SelectList(_context.Set<IdentityUser>(), "Id", "Id", customer.UserId);
+      
             return View(customer);
         }
 
@@ -141,9 +139,7 @@ namespace FinalProjectBandits.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            //string address = "1050 Woodward Ave, Detroit, MI 48226";
-           // bool inMuap = MuapUtility.IsAddressInMUAPArea(address);
-           // ViewData["UserId"] = new SelectList(_context.Set<IdentityUser>(), "Id", "Id", customer.UserId);
+            
             return View(customer);
         }
 

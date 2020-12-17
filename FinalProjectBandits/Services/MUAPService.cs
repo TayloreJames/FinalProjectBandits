@@ -122,41 +122,7 @@ namespace FinalProjectBandits.Services
                 }
             }
         }
-        /*
-        public void FlattenRings()
-        {
-
-            foreach (var ringPolygon in Rings)
-            {
-                Rings2 = new RingPolygons();
-                Rings2.InnerAndOuterPolygon = new List<Polygon>();
-
-                foreach (var coordinatePair in ringPolygon)
-                {
-                    var coordinatePoints = new List<CoordinatePoint>();
-                    //var coordinatePair = new List<Coo>
-                    //coordinateSetObject.Coordinates.Add(coordinate);
-                    var coordinatePairs = new Polygon();
-                    var finalCoordinatePoint = new CoordinatePoint();
-                    foreach (var coordinatePoint in coordinatePair)
-                    {
-                        if (coordinatePoint == coordinatePair[0])
-                        {
-                            finalCoordinatePoint.Latitude = coordinatePoint;
-                        }
-                        finalCoordinatePoint.Longitude = coordinatePoint;
-
-                    }
-                    coordinatePoints.Add(finalCoordinatePoint);
-                    coordinatePairs.Coordinates = coordinatePoints;
-
-                    Rings2.InnerAndOuterPolygon.Add(coordinatePairs);
-                }
-                
-            }
-        }*/
-
-
+ 
     }
     //list of polygons
     public class RingPolygons
@@ -167,8 +133,7 @@ namespace FinalProjectBandits.Services
     //polygon
     public class Polygon
     {
-        //public float Lat { get; set; }
-        //public float Long { get; set; }
+        
 
         //want this returned
         public List<CoordinatePoint> Coordinates { get; set; }

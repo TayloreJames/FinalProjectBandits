@@ -40,9 +40,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Items[0].DatePosted)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Items[0].Customer)
-            </th>*@
+            
             <th></th>
         </tr>
     </thead>
@@ -73,9 +71,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.DatePosted)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Customer.ID)
-                </td>*@
+
             <td>
                 <a asp-controller="TaskListItems" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                 <br />
@@ -113,10 +109,7 @@
                 @Html.DisplayNameFor(model => model.Items[0].DatePosted)
             </th>
             
-            @*<th>
-                @Html.DisplayNameFor(model => model.Items[0].Customer)
-            </th>*@
-            
+         
             <th></th>
         </tr>
     </thead>
@@ -149,9 +142,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.DatePosted)
                 </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Customer.ID)
-                    </td>*@
+                
                 <td>
                     <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Details" class="btn btn-primary" /></a>
                 </td>

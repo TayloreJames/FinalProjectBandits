@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-
+using FinalProjectBandits.Configuration;
 
 namespace FinalProjectBandits.Services
 {
@@ -16,11 +16,12 @@ namespace FinalProjectBandits.Services
     {
         private readonly HttpClient _httpClient;
         private JsonSerializerOptions _options;
-        private const string _key = "AIzaSyAnFtWq1VKpckVtV3i665mgdfzf20m6y6g";
+        private readonly GoogleMapsConfig _googleMapsConfig;
 
-        public GeocodingService(HttpClient httpClient)
+        public GeocodingService(HttpClient httpClient, GoogleMapsConfig googleMapsConfig)
         {
             _httpClient = httpClient;
+            _googleMapsConfig = googleMapsConfig;
             _options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
@@ -31,7 +32,7 @@ namespace FinalProjectBandits.Services
         public async Task<GeocodingObject> GetGeocodingResults(string address)
         {
             //https: //maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyAnFtWq1VKpckVtV3i665mgdfzf20m6y6&libraries=geometry            
-            var response = await _httpClient.GetAsync($"json?address={address}&key={_key}&libraries=geometry");
+            var response = await _httpClient.GetAsync($"json?address={address}&key={_googleMapsConfig.ApiKey}&libraries=geometry");
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
