@@ -4,7 +4,16 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .btn {
+        opacity: 1;
+        transition: 0.3s;
+    }
 
+        .btn:hover {
+            opacity: 0.6
+        }
+</style>
 <h1>Details</h1>
 
 <div>
@@ -62,8 +71,8 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="CheckOut" asp-route-id="@Model.Id">Check Out This Item</a> |
-    <a asp-action="MarkDone" asp-route-id="@Model.Id">Mark This Item Done!</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id"><input type="submit" value="Edit" class="btn btn-primary" /></a> 
+    <a asp-action="CheckOut" asp-route-id="@Model.Id"><input type="submit" value="Check Out This Item" class="btn btn-primary" /></a> 
+    <a asp-action="MarkDone" asp-route-id="@Model.Id"><input type="submit" value="Mark This Item Done!" class="btn btn-primary" /></a> 
+    <a asp-action="Index"><input type="submit" value="Back to List" class="btn btn-primary" /></a>
 </div>

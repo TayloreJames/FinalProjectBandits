@@ -4,7 +4,16 @@
     ViewData["Title"] = "User Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .btn {
+        opacity: 1;
+        transition: 0.3s;
+    }
 
+        .btn:hover {
+            opacity: 0.6
+        }
+</style>
 <h1>Hello @Html.DisplayFor(model => model.First_Name)!</h1>
 <h3>Your Tasks</h3>
 <table class="table">
@@ -67,11 +76,13 @@
                 @*<td>
                     @Html.DisplayFor(modelItem => item.Customer.ID)
                 </td>*@
-                <td>
-                    <a asp-controller="TaskListItems" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-controller="TaskListItems" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+            <td>
+                <a asp-controller="TaskListItems" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <br />
+                <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <br />
+                <a asp-controller="TaskListItems" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
             </tr>
         }
     </tbody>
@@ -142,7 +153,7 @@
                         @Html.DisplayFor(modelItem => item.Customer.ID)
                     </td>*@
                 <td>
-                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-controller="TaskListItems" asp-action="Details" asp-route-id="@item.Id"><input type="submit" value="Details" class="btn btn-primary" /></a>
                 </td>
             </tr>
         }

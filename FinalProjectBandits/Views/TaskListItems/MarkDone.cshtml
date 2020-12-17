@@ -10,7 +10,16 @@
         statusBgColor = "background-color:aqua";
     }
 }
+<style>
+    .btn {
+        opacity: 1;
+        transition: 0.3s;
+    }
 
+        .btn:hover {
+            opacity: 0.6
+        }
+</style>
 <h1>Marked Done</h1>
 
 <div>
@@ -81,5 +90,5 @@
 </div>
 <div>
 
-    <a asp-controller="TaskListItems" asp-action="Index">Back to List</a>
+    <a asp-controller="TaskListItems" asp-action="Index"><input type="submit" value="Back to List" class="btn btn-primary" /></a>
 </div>

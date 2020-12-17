@@ -4,7 +4,16 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .btn {
+        opacity: 1;
+        transition: 0.3s;
+    }
 
+        .btn:hover {
+            opacity: 0.6
+        }
+</style>
 <h1>Create</h1>
 
 <h4>TaskListItem</h4>
@@ -54,7 +63,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><input type="submit" value="Back to List" class="btn btn-primary" /></a>
 </div>
 
 @section Scripts {
